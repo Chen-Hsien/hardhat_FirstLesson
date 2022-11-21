@@ -166,5 +166,8 @@ describe("Token contract", function () {
 ```
 執行```npx hardhat test```正確的話可以得到。  
 <img width="625" alt="image" src="https://user-images.githubusercontent.com/24216536/203005503-2b4fea15-d95c-41b1-b520-e52a0ed716e4.png">
+來解釋一下程式碼都在做些什麼   
 
-
+Signer用於以太坊中的message, transaction操作，例如和MetaMask
+```const [owner] = await ethers.getSigners();```
+describe("Token contract", function () {
