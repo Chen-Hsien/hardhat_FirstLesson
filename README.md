@@ -171,15 +171,15 @@ describe("Token contract", function () {
 Signer用於以太坊中的message, transaction操作，例如和MetaMask可以藉此發送交易、簽署等   
 ```const [owner] = await ethers.getSigners();```
 
-```ContractFactory```在ethers.js中是用在部署智能合約上的抽象對象，並將Token作為ContractFactory的實作   
+```ContractFactory```在ethers.js中是用在部署智能合約上的抽象對象，並將Token作為ContractFactory的實作    
 ```const Token = await ethers.getContractFactory("Token");```
 
-調用deploy進行合約的部署
+調用deploy進行合約的部署.  
 ```const hardhatToken = await Token.deploy();```
 
-紀錄該地址內所有者帳戶的餘額
+紀錄該地址內所有者帳戶的餘額.  
 ```const ownerBalance = await hardhatToken.balanceOf(owner.address);```
 
 最後就是單元測試要設計的expect條件了，預期totalSupply＝ownerBalance，就是我們本次測試的範例囉。 
-xpect(await hardhatToken.totalSupply()).to.equal(ownerBalance);```
+```expect(await hardhatToken.totalSupply()).to.equal(ownerBalance);```
 
