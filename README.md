@@ -48,6 +48,25 @@ module.exports = {
 * test/ 測試用的腳本所在位子。  
 * scripts/ 是簡單的自動化腳本所在的位子。  
 
+#### TypeScipt配置
+hardhat支援將JavaScript 項目很簡易的轉置成TypeScript項目.  
+其背後使用TypeScript和ts-node  先安裝對應的Package起來。  
+```CLI
+npm install --save-dev ts-node typescript
+//單元測試用
+npm install --save-dev chai @types/node @types/mocha @types/chai
+```
+接著將環境文件```hardhat.config.js```改名為```hardhat.config.ts```   
+並於使用時注意以下三點，如此便可以開始使用TypeScript   
+1. 必須使用import而不是 require來引入套件。
+2. 需要手動載入Hardhat配置函数，比如```import { task } from "hardhat/config";```。
+3. 如果你正在自定義操作，它们需要明確的指定[Hardhat運行]，並將其作為一個參數
+```Solidity
+export default {
+  solidity: "0.7.3",
+};
+```
+   
 #### 建立第一個智能合約
 用一個簡單的合約來練習吧～   
 在contract/下新增Token.sol
@@ -121,9 +140,31 @@ contract Token {
 ```
 
 #### Compiling Contracts
-執行```npx hardhat compile```，
-執行```npx hardhat compile```ㄑ
-執行```npx hardhat compile``
-<img width="623" alt="image" src="https://user-images.githubusercontent.com/24216536/202977020-09baed67-433e-456b-b708-d099bb3ff287.png">
+執行```npx hardhat compile```，其中遇到Nothing to Compile，回去看發現資料夾要命名為contracts，少了s就抓不到哈。  
+<img width="623" alt="image" src="https://user-images.githubusercontent.com/24216536/202977020-09baed67-433e-456b-b708-d099bb3ff287.png">。  
+完成即會顯示   
+<img width="464" alt="image" src="https://user-images.githubusercontent.com/24216536/202977207-73cbc7da-2af3-4003-9938-220fde8458e0.png">   
+
+#### TESTING
+在test/下建立Token.ts
+```Typescript 
+import { expect } from "chai";
+import { ethers } from "hardhat";
+
+describe("Token contract", function () {
+  it("Deployment should assign the total supply of tokens to the owner/typescript", async function () {
+    const [owner] = await ethers.getSigners();
+
+    const Token = await ethers.getContractFactory("Token");
+
+    const hardhatToken = await Token.deploy();
+
+    const ownerBalance = await hardhatToken.balanceOf(owner.address);
+    expect(await hardhatToken.totalSupply()).to.equal(ownerBalance);
+  });
+});
+```
+執行```npx hardhat test```正確的話可以得到。  
+<img width="625" alt="image" src="https://user-images.githubusercontent.com/24216536/203005503-2b4fea15-d95c-41b1-b520-e52a0ed716e4.png">
 
 
