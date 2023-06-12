@@ -183,3 +183,40 @@ Signer用於以太坊中的message, transaction操作，例如和MetaMask可以�
 最後就是單元測試要設計的expect條件了，預期totalSupply＝ownerBalance，就是我們本次測試的範例囉。 
 ```expect(await hardhatToken.totalSupply()).to.equal(ownerBalance);```
 
+#### Gas Report
+```npm i hardhat-gas-reporter```
+```JS
+//hardhat.config.ts
+require ("hardhat-gas-reporter")
+
+gasReporter: {
+  enabled: true,
+  outputFile: "gas-report.txt",
+  noColors: true,
+  currency: USD,
+  coinmarketcap: COINMARKET_API_KEY,
+  token:"MATIC", 
+}
+```
+![image](https://github.com/Chen-Hsien/hardhat_FirstLesson/assets/24216536/2c101d98-f7bc-49f4-9499-5d25f5d79e62)
+
+#### Solidity Coverage
+```npm i solidity-coverage```
+
+```JS
+require("solidity-coverage")
+```
+![image](https://github.com/Chen-Hsien/hardhat_FirstLesson/assets/24216536/0aefceea-83f8-43c1-a990-12ff0eeab425)
+
+#### Hardhat Waffle
+
+
+
+
+
+
+
+
+
+
+
